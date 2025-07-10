@@ -1,0 +1,428 @@
+{
+  "name": "Internship Task Workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "triggerOn": "specificFolder",
+        "folderToWatch": {
+          "__rl": true,
+          "value": "1eCgjK5VdlhwZfVGlRj9r_1Ouepq7rj3Y",
+          "mode": "list",
+          "cachedResultName": "Ready to Publish",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1eCgjK5VdlhwZfVGlRj9r_1Ouepq7rj3Y"
+        },
+        "event": "fileCreated",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDriveTrigger",
+      "typeVersion": 1,
+      "position": [
+        -600,
+        -40
+      ],
+      "id": "8d47925c-dc15-4a05-afd1-847bc0cae260",
+      "name": "Google Drive Trigger1",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "xRSzhekiuMTTOZ64",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "documentURL": "={{ $json[\"id\"] }}"
+      },
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        -280,
+        -40
+      ],
+      "id": "69e72410-f521-43e4-a04c-40eb3834595a",
+      "name": "Get a document",
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "UyOjVMS6apBmrjHG",
+          "name": "Google Docs account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-3.5-turbo",
+          "mode": "list",
+          "cachedResultName": "GPT-3.5-TURBO"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=Generate a concise, SEO-friendly meta description (155 characters max) for the following blog post:\n\n{{ $node[\"Parse All Content\"].json.htmlContent }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        -740,
+        200
+      ],
+      "id": "6b19a9f5-75b0-4606-b470-05241df757f8",
+      "name": "Generate Meta Desc",
+      "credentials": {
+        "openAiApi": {
+          "id": "6rz03jsjUcuaO8Ih",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "3067e742-f127-4a6f-ac14-5c7148e55dff",
+              "leftValue": "={{ $json.error === undefined }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -160,
+        200
+      ],
+      "id": "9d9f21ba-c026-4aa0-a89f-5927c9dda84d",
+      "name": "If",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "const docContent = $input.item.json.content;\nconst lines = docContent.split('\\n');\n\nconst imageLine = lines.find(line => line.toLowerCase().startsWith('image:'));\nconst imageUrl = imageLine ? imageLine.replace(/image:/i, '').trim() : null;\n\nconst title = lines.find(line => line.trim() && !line.toLowerCase().startsWith('image:')) || 'Default Title';\n\nconst tagsLine = lines.find(line => line.toLowerCase().startsWith('tags:'));\nconst tags = tagsLine ? tagsLine.replace(/tags:/i, '').split(',').map(t => t.trim()) : [];\n\nconst titleIndex = lines.findIndex(line => line === title);\nconst tagsIndex = lines.findIndex(line => line === tagsLine);\nconst bodyLines = lines.slice(titleIndex + 1, tagsIndex).filter(line => line.trim());\nconst body = bodyLines.join('\\n').trim();\n\n// Convert body to HTML for Ghost\nconst htmlContent = '<p>' + body.replace(/\\n/g, '</p><p>') + '</p>';\n\nreturn [{\n  json: {\n    title,\n    htmlContent,\n    tags,\n    imageUrl\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        20,
+        -40
+      ],
+      "id": "573f751f-3028-4040-b8e9-7d3bddf60ae7",
+      "name": "Parse All Content"
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "C095J75RSAD",
+          "mode": "list",
+          "cachedResultName": "published"
+        },
+        "text": "=New article published! 🎉\n\n*{{ $node[\"Create Ghost Post via HTTP\"].json.posts[0].title }}*\nRead it here: {{ $node[\"Create Ghost Post via HTTP\"].json.posts[0].url }}",
+        "otherOptions": {}
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.3,
+      "position": [
+        120,
+        180
+      ],
+      "id": "8891f1d7-1031-4728-92e0-02cff2fa34cb",
+      "name": "Send a success message",
+      "webhookId": "82203bf4-aa2b-4412-af0b-9e9e39bdba49",
+      "credentials": {
+        "slackOAuth2Api": {
+          "id": "laTjFmIt8PUPuBCr",
+          "name": "Slack account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "select": "channel",
+        "channelId": {
+          "__rl": true,
+          "value": "C095J75RSAD",
+          "mode": "list",
+          "cachedResultName": "published"
+        },
+        "text": "=🔴 Error: Failed to publish article \"*{{ $node[\"Parse All Content\"].json.title }}*\"\n\n**Reason:** {{ $json.error.message }}",
+        "otherOptions": {}
+      },
+      "type": "n8n-nodes-base.slack",
+      "typeVersion": 2.3,
+      "position": [
+        -100,
+        460
+      ],
+      "id": "6aecc822-65ea-42d2-9415-6eaba679d10a",
+      "name": "Send a error message",
+      "webhookId": "905d0787-0e18-4e5b-a4f6-97f145c8a4d6",
+      "credentials": {
+        "slackOAuth2Api": {
+          "id": "laTjFmIt8PUPuBCr",
+          "name": "Slack account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://albert-abishek.ghost.io/ghost/api/admin/posts/",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Ghost eyJhbGciOiJIUzI1NiIsImtpZCI6IjY4NmZiZjMxMmRhNjhiMDAwMWYyYWYxNyIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3NTIxNjg5OTksImV4cCI6MTc1MjE2OTI5OSwiYXVkIjoiL2FkbWluLyJ9.VhYHAR6jk-F3krwz-_9cQc0g1qqnjFD_E2Q1850O1dA"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"posts\": [\n    {\n      \"title\": \"{{ $node['Parse All Content'].json.title }}\",\n      \"html\": \"{{ $node['Parse All Content'].json.htmlContent }}\",\n      \"feature_image\": \"{{ $node['Parse All Content'].json.imageUrl }}\",\n      \"meta_description\": \"{{ $node['Generate Meta Desc'].json.message.content }}\",\n      \"status\": \"published\"\n    }\n  ]\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -380,
+        200
+      ],
+      "id": "01554f76-d619-4a32-92a3-e232c59f52d7",
+      "name": "Create Ghost Post via HTTP",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "13uGfTBLRPmQPJY_3XITG0Zuil0sWbHg3sHSFfbbreLs",
+          "mode": "list",
+          "cachedResultName": "Published Articles Log",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13uGfTBLRPmQPJY_3XITG0Zuil0sWbHg3sHSFfbbreLs/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/13uGfTBLRPmQPJY_3XITG0Zuil0sWbHg3sHSFfbbreLs/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Post Title": "={{ $('Create Ghost Post via HTTP').item.json.posts[0].title }}",
+            "URL": "= {{ $('Create Ghost Post via HTTP').item.json.posts[0].url }}",
+            "Publish Date": "={{ new Date().toISOString() }}",
+            "Tags": "={{ $('Parse All Content').item.json.tags.join(', ') }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Post Title",
+              "displayName": "Post Title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "URL",
+              "displayName": "URL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Publish Date",
+              "displayName": "Publish Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Tags",
+              "displayName": "Tags",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        360,
+        180
+      ],
+      "id": "bc0f54b4-ced6-4a62-b07b-4362a0bd7a0d",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "AtFeBqz2vNs3D7kr",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Google Drive Trigger1": {
+      "main": [
+        [
+          {
+            "node": "Get a document",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get a document": {
+      "main": [
+        [
+          {
+            "node": "Parse All Content",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Meta Desc": {
+      "main": [
+        [
+          {
+            "node": "Create Ghost Post via HTTP",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Send a success message",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send a error message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse All Content": {
+      "main": [
+        [
+          {
+            "node": "Generate Meta Desc",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a success message": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Ghost Post via HTTP": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "44f19d26-0810-402d-98e2-21eea2e665a8",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "319a099818a13f92493c0ebfd62d7ed14c65bcbff6129e677cc90819ef07215c"
+  },
+  "id": "Mby85nft7UtGfbAo",
+  "tags": [
+    {
+      "name": "Google Drive",
+      "id": "PAa18tLr2rnd5CP2",
+      "createdAt": "2025-07-10T11:49:48.221Z",
+      "updatedAt": "2025-07-10T11:49:48.221Z"
+    },
+    {
+      "name": "Wordpress",
+      "id": "Y6MSIs9MyRQWbksU",
+      "createdAt": "2025-07-10T11:49:48.263Z",
+      "updatedAt": "2025-07-10T11:49:48.263Z"
+    },
+    {
+      "name": "DeepSeek",
+      "id": "cSW3AtVASRNsdp3z",
+      "createdAt": "2025-07-10T11:49:48.242Z",
+      "updatedAt": "2025-07-10T11:49:48.242Z"
+    }
+  ]
+}

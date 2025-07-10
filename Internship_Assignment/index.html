@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Submission for the Rahul Enterprises AI Agent Development Internship by Albert Abishek.">
+    <meta name="author" content="Albert Abishek">
+    <title>Albert Abishek | AI Automation Submission</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Roboto+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6a0dad;
+            --secondary: #2196F3;
+            --dark: #121828;
+            --light: #f0f8ff;
+            --accent: #ff6b6b;
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--dark);
+            color: var(--light);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        header {
+            padding: 1rem 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(18, 24, 40, 0.85);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            transition: top 0.3s;
+        }
+        .navbar { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.5rem; font-weight: 700; color: var(--light); text-decoration: none; }
+        .logo span { color: var(--secondary); }
+        .nav-links { display: flex; gap: 2rem; }
+        .nav-links a { color: var(--light); text-decoration: none; font-weight: 500; position: relative; padding: 5px 0; transition: var(--transition); }
+        .nav-links a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: var(--secondary); transition: var(--transition); }
+        .nav-links a:hover::after { width: 100%; }
+        .hero {
+            padding: 8rem 0 4rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-content { z-index: 2; }
+        .hero h1 { font-size: 3.5rem; line-height: 1.2; margin-bottom: 1rem; background: linear-gradient(90deg, var(--primary), var(--secondary)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .hero p { font-size: 1.2rem; margin-bottom: 2.5rem; color: #cbd5e1; max-width: 700px; margin-left: auto; margin-right: auto; }
+        .btn { display: inline-block; padding: 14px 32px; background: linear-gradient(90deg, var(--primary), var(--secondary)); color: white; border: none; border-radius: 50px; font-weight: 600; font-size: 1rem; cursor: pointer; transition: var(--transition); text-decoration: none; box-shadow: 0 4px 20px rgba(33, 150, 243, 0.4); }
+        .btn:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(33, 150, 243, 0.5); }
+        .btn i { margin-right: 8px; }
+        section { padding: 5rem 0; }
+        .section-title { text-align: center; margin-bottom: 4rem; }
+        .section-title h2 { font-size: 2.8rem; display: inline-block; position: relative; padding-bottom: 15px; }
+        .section-title h2::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 80px; height: 4px; background: linear-gradient(90deg, var(--primary), var(--secondary)); border-radius: 2px; }
+        .section-title p { color: #94a3b8; max-width: 700px; margin: 1rem auto 0; }
+        .card { background: rgba(30, 41, 59, 0.7); border-radius: 15px; padding: 2rem; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); transition: var(--transition); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.05); }
+        .card:hover { transform: translateY(-10px); box-shadow: 0 15px 40px rgba(106, 13, 173, 0.2); }
+        .card-title { display: flex; align-items: center; gap: 15px; margin-bottom: 1.5rem; color: var(--secondary); font-size: 1.5rem; }
+        .card-title i { background: rgba(33, 150, 243, 0.1); width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; border-radius: 10px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+        .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 15px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); }
+        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+        .screenshot-container { border-radius: 10px; overflow: hidden; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4); transition: var(--transition); border: 1px solid rgba(255, 255, 255, 0.1); }
+        .screenshot-container:hover { transform: scale(1.03); box-shadow: 0 15px 40px rgba(106, 13, 173, 0.3); }
+        .screenshot-container img { width: 100%; display: block; }
+        .timeline { position: relative; padding-left: 30px; }
+        .timeline::before { content: ''; position: absolute; left: 5px; top: 0; bottom: 0; width: 2px; background: rgba(33, 150, 243, 0.3); }
+        .timeline-item { margin-bottom: 2rem; position: relative; }
+        .timeline-item::before { content: ''; position: absolute; left: -35px; top: 5px; width: 12px; height: 12px; border-radius: 50%; background: var(--secondary); border: 3px solid var(--dark); }
+        .timeline-item h4 { color: var(--secondary); }
+        footer { background: rgba(18, 24, 40, 0.8); padding: 3rem 0; text-align: center; margin-top: 3rem; }
+        .contact-links { display: flex; justify-content: center; gap: 1.5rem; margin: 1rem 0; }
+        .contact-link { width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--secondary)); display: flex; align-items: center; justify-content: center; color: var(--light); font-size: 1.2rem; transition: var(--transition); text-decoration: none; }
+        .contact-link:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(33, 150, 243, 0.4); }
+        .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero h1 { font-size: 2.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <header id="header">
+        <div class="container">
+            <nav class="navbar">
+                <a href="#" class="logo">Albert<span>.dev</span></a>
+                <div class="nav-links">
+                    <a href="#overview">Overview</a>
+                    <a href="#demo">Live Demo</a>
+                    <a href="#deliverables">Deliverables</a>
+                    <a href="#journey">My Journey</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content fade-in">
+                    <h1>AI Agent Development Internship Submission</h1>
+                    <p>A robust n8n automation to streamline content publishing from Google Docs to Ghost, complete with AI-powered SEO, featured image handling, and comprehensive error logging.</p>
+                    <a href="#demo" class="btn"><i class="fas fa-play-circle"></i> Watch the Demo</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="overview">
+            <div class="container">
+                <div class="section-title fade-in">
+                    <h2>Project Overview</h2>
+                    <p>The mission was to build a fully automated content pipeline. This solution demonstrates a production-ready workflow that is efficient, reliable, and intelligent.</p>
+                </div>
+                <div class="card fade-in">
+                    <h3 class="card-title"><i class="fas fa-cogs"></i> How It Works</h3>
+                    <p>The automation triggers when a writer moves a Google Doc into a "Ready to Publish" folder. The n8n workflow then takes over, performing a series of actions: it parses the document to extract the title, body content, tags, and a featured image URL. It then uses the OpenAI API to generate a concise, SEO-friendly meta description. Finally, it publishes the complete article to a Ghost blog, setting the title, content, tags, meta description, and featured image—all without human intervention. For full reliability, the entire process is wrapped in error handling, with success and failure notifications sent to Slack and a permanent log kept in Google Sheets.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="demo">
+            <div class="container">
+                <div class="section-title fade-in">
+                    <h2>Live Demo & Walkthrough</h2>
+                    <p>This video provides a complete demonstration of the workflow in action, from start to finish, and explains the technical decisions made during development.</p>
+                </div>
+                <div class="card fade-in">
+                    <div class="video-container">
+                        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="deliverables">
+            <div class="container">
+                <div class="section-title fade-in">
+                    <h2>Submission Deliverables</h2>
+                    <p>Here are all the required components for the assignment, including the workflow file and proof of execution.</p>
+                </div>
+                
+                <div class="grid">
+                    <div class="card fade-in">
+                        <h3 class="card-title"><i class="fas fa-table"></i> n8n Workflow image</h3>
+                        <p>A screenshot of the n8n Workflow</p>
+                         <div class="screenshot-container" style="margin-top: 1rem;">
+                            <a href="images/Workflow.png" target="_blank"><img src="images/Workflow.png" alt="Google Sheets Log Screenshot"></a>
+                        </div>
+                    </div>
+
+                    <div class="card fade-in">
+                        <h3 class="card-title"><i class="fas fa-file-code"></i> n8n Workflow File</h3>
+                        <p>The complete, exported n8n workflow. You can import this directly into your own n8n instance to see the full implementation.</p>
+                        <a href="Internship Task Workflow.json" download class="btn" style="margin-top: 1rem;"><i class="fas fa-download"></i> Download workflow.json</a>
+                    </div>
+                    <div class="card fade-in">
+                        <h3 class="card-title"><i class="fas fa-image"></i> Final Blog Post</h3>
+                        <p>A screenshot of the final article published on the Ghost blog, complete with the featured image and correct formatting.</p>
+                        <div class="screenshot-container" style="margin-top: 1rem;">
+                            <a href="images/Ghost site.png" target="_blank"><img src="images/Ghost site.png" alt="Ghost Post Screenshot"></a>
+                        </div>
+                    </div>
+                    <div class="card fade-in">
+                        <h3 class="card-title"><i class="fab fa-slack"></i> Success & Error Proof</h3>
+                        <p>Screenshots demonstrating both the success notification and the robust error handling notification in Slack.</p>
+                         <div class="screenshot-container" style="margin-top: 1rem;">
+                            <a href="images/slack-notifications.png" target="_blank"><img src="images/slack-notifications.png" alt="Slack Notifications Screenshot"></a>
+                        </div>
+                    </div>
+                     <div class="card fade-in">
+                        <h3 class="card-title"><i class="fas fa-table"></i> Google Sheets Log</h3>
+                        <p>A screenshot of the Google Sheet, showing the successful logging of the published article's details.</p>
+                         <div class="screenshot-container" style="margin-top: 1rem;">
+                            <a href="images/Google sheet.png" target="_blank"><img src="images/Google sheet.png" alt="Google Sheets Log Screenshot"></a>
+                        </div>
+                    </div>
+                    <div class="card fade-in">
+                        <h3 class="card-title"><i class="fas fa-table"></i> Google Docs Log</h3>
+                        <p>A screenshot of the Google Docs, showing the post details.</p>
+                         <div class="screenshot-container" style="margin-top: 1rem;">
+                            <a href="images/Google Docs.png" target="_blank"><img src="images/Google Docs.png" alt="Google Sheets Log Screenshot"></a>
+                        </div>
+                    </div>
+                    <div class="card fade-in">
+                        <h3 class="card-title"><i class="fas fa-table"></i> Google Drive Folders</h3>
+                        <p>A screenshot of the Google Drive, showing the Draft and Ready to Publish folders.</p>
+                         <div class="screenshot-container" style="margin-top: 1rem;">
+                            <a href="images/Google Drive.png" target="_blank"><img src="images/Google Drive.png" alt="Google Sheets Log Screenshot"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="journey">
+            <div class="container">
+                <div class="section-title fade-in">
+                    <h2>The Development Journey</h2>
+                    <p>A successful project is not just about the final result, but the process of overcoming challenges. This section details the strategic decisions and problem-solving that led to the final, robust workflow.</p>
+                </div>
+                <div class="card fade-in">
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <h4>Initial Platform: WordPress.com</h4>
+                            <p>I began by building the automation for WordPress.com. While I successfully interacted with its API, I quickly discovered critical limitations in the free tier's media handling capabilities, which made direct file uploads unreliable.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h4>Pivot 1: WordPress.org</h4>
+                            <p>Recognizing the platform constraints, I made a strategic pivot to a self-hosted WordPress.org environment. This provided full API access but revealed a deep-seated incompatibility between the n8n version's HTTP node and the specific requirements for multipart file uploads, leading to persistent errors.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h4>Pivot 2 & Final Solution: Ghost</h4>
+                            <p>To deliver a flawless and professional solution, I made a final pivot to Ghost. Its modern, well-documented Admin API and first-class n8n integration allowed me to build the final workflow efficiently. This version seamlessly publishes the content, sideloads the featured image from its URL, and sets all metadata in a single, reliable step.</p>
+                        </div>
+                         <div class="timeline-item">
+                            <h4>Key Takeaway</h4>
+                            <p>This journey highlights my ability to diagnose platform-level issues, adapt to unforeseen technical challenges, and strategically choose the right tools to ensure a project's success. It demonstrates resilience and a commitment to delivering a high-quality, working product.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <h3>Albert Abishek</h3>
+            <p>AI & Automation Enthusiast</p>
+            <div class="contact-links">
+                <a href="mailto:include1iostream2@gmail.com" class="contact-link" aria-label="Email"><i class="fas fa-envelope"></i></a>
+                <a href="https://www.linkedin.com/" target="_blank" class="contact-link" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                <a href="https://github.com/" target="_blank" class="contact-link" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const faders = document.querySelectorAll('.fade-in');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+            faders.forEach(fader => {
+                observer.observe(fader);
+            });
+
+            let lastScrollTop = 0;
+            const header = document.getElementById('header');
+            window.addEventListener('scroll', function() {
+                let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                if (scrollTop > lastScrollTop) {
+                    header.style.top = '-80px';
+                } else {
+                    header.style.top = '0';
+                }
+                lastScrollTop = scrollTop;
+            });
+        });
+    </script>
+</body>
+</html>
