@@ -3,35 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Submission for the Rahul Enterprises AI Agent Development Internship by Albert Abishek.">
-    <meta name="author" content="Albert Abishek">
     <title>Albert Abishek | AI Automation Submission</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Roboto+Mono&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Roboto+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #6a0dad;
+            --primary-dark: #5a0b9d;
             --secondary: #2196F3;
+            --secondary-dark: #1a7dd1;
             --dark: #121828;
+            --darker: #0d1321;
             --light: #f0f8ff;
+            --light-transparent: rgba(240, 248, 255, 0.8);
             --accent: #ff6b6b;
+            --success: #4CAF50;
+            --warning: #FFC107;
             --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+            --gradient-hover: linear-gradient(135deg, var(--primary-dark), var(--secondary-dark));
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --card-border: rgba(255, 255, 255, 0.05);
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            --shadow-hover: 0 15px 40px rgba(106, 13, 173, 0.4);
+            --transition-3d: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
+        
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+        }
+        
+        html { 
+            scroll-behavior: smooth; 
+            font-size: 16px;
+        }
+        
         body {
             font-family: 'Poppins', sans-serif;
-            background: var(--dark);
+            background: var(--darker);
             color: var(--light);
             line-height: 1.7;
             overflow-x: hidden;
+            position: relative;
+            perspective: 1000px;
         }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(106, 13, 173, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(33, 150, 243, 0.1) 0%, transparent 20%);
+            z-index: -2;
+        }
+        
+        /* Particle Background */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+        
         .container {
             width: 100%;
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
         }
+        
+        .section-padding {
+            padding: 6rem 0;
+        }
+        
+        /* Header & Navigation */
         header {
             padding: 1rem 0;
             position: fixed;
@@ -42,16 +95,115 @@
             background: rgba(18, 24, 40, 0.85);
             backdrop-filter: blur(10px);
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-            transition: top 0.3s;
+            transition: top 0.3s, transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform: translateZ(0);
         }
-        .navbar { display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 1.5rem; font-weight: 700; color: var(--light); text-decoration: none; }
-        .logo span { color: var(--secondary); }
-        .nav-links { display: flex; gap: 2rem; }
-        .nav-links a { color: var(--light); text-decoration: none; font-weight: 500; position: relative; padding: 5px 0; transition: var(--transition); }
-        .nav-links a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: var(--secondary); transition: var(--transition); }
-        .nav-links a:hover::after { width: 100%; }
-        .hero {
+        
+        .navbar { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+        }
+        
+        .logo { 
+            font-size: 1.8rem; 
+            font-weight: 800; 
+            color: var(--light); 
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: var(--transition);
+            transform-style: preserve-3d;
+        }
+        
+        .logo span { 
+            color: var(--secondary); 
+            font-weight: 800;
+            text-shadow: 0 0 10px rgba(33, 150, 243, 0.5);
+        }
+        
+        .logo i {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            transform: translateZ(20px);
+        }
+        
+        .nav-links { 
+            display: flex; 
+            gap: 2.5rem; 
+        }
+        
+        .nav-links a { 
+            color: var(--light); 
+            text-decoration: none; 
+            font-weight: 500; 
+            position: relative; 
+            padding: 5px 0; 
+            transition: var(--transition); 
+            font-size: 1.05rem;
+            transform: translateZ(0);
+        }
+        
+        .nav-links a::after { 
+            content: ''; 
+            position: absolute; 
+            bottom: 0; 
+            left: 0; 
+            width: 0; 
+            height: 3px; 
+            background: var(--secondary); 
+            transition: var(--transition); 
+            border-radius: 2px;
+            transform: translateZ(0);
+        }
+        
+        .nav-links a:hover::after { 
+            width: 100%; 
+        }
+        
+        .nav-links a.active {
+            color: var(--secondary);
+            font-weight: 600;
+        }
+        
+        .nav-links a.active::after {
+            width: 100%;
+        }
+        
+        .menu-toggle {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: var(--light);
+            z-index: 1001;
+        }
+        
+        
+        
+        .hero-badge {
+            display: inline-block;
+            background: rgba(33, 150, 243, 0.15);
+            color: var(--secondary);
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(33, 150, 243, 0.3);
+            transform: translateZ(10px);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(33, 150, 243, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(33, 150, 243, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(33, 150, 243, 0); }
+        }
+        
+       .hero {
             padding: 8rem 0 4rem;
             display: flex;
             align-items: center;
@@ -64,51 +216,812 @@
         .hero-content { z-index: 2; }
         .hero h1 { font-size: 3.5rem; line-height: 1.2; margin-bottom: 1rem; background: linear-gradient(90deg, var(--primary), var(--secondary)); -webkit-background-clip: text; background-clip: text; color: transparent; }
         .hero p { font-size: 1.2rem; margin-bottom: 2.5rem; color: #cbd5e1; max-width: 700px; margin-left: auto; margin-right: auto; }
-        .btn { display: inline-block; padding: 14px 32px; background: linear-gradient(90deg, var(--primary), var(--secondary)); color: white; border: none; border-radius: 50px; font-weight: 600; font-size: 1rem; cursor: pointer; transition: var(--transition); text-decoration: none; box-shadow: 0 4px 20px rgba(33, 150, 243, 0.4); }
-        .btn:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(33, 150, 243, 0.5); }
-        .btn i { margin-right: 8px; }
-        section { padding: 5rem 0; }
-        .section-title { text-align: center; margin-bottom: 4rem; }
-        .section-title h2 { font-size: 2.8rem; display: inline-block; position: relative; padding-bottom: 15px; }
-        .section-title h2::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 80px; height: 4px; background: linear-gradient(90deg, var(--primary), var(--secondary)); border-radius: 2px; }
-        .section-title p { color: #94a3b8; max-width: 700px; margin: 1rem auto 0; }
-        .card { background: rgba(30, 41, 59, 0.7); border-radius: 15px; padding: 2rem; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); transition: var(--transition); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.05); }
-        .card:hover { transform: translateY(-10px); box-shadow: 0 15px 40px rgba(106, 13, 173, 0.2); }
-        .card-title { display: flex; align-items: center; gap: 15px; margin-bottom: 1.5rem; color: var(--secondary); font-size: 1.5rem; }
-        .card-title i { background: rgba(33, 150, 243, 0.1); width: 45px; height: 45px; display: flex; align-items: center; justify-content: center; border-radius: 10px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
-        .video-container { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 15px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); }
-        .video-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
-        .screenshot-container { border-radius: 10px; overflow: hidden; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4); transition: var(--transition); border: 1px solid rgba(255, 255, 255, 0.1); }
-        .screenshot-container:hover { transform: scale(1.03); box-shadow: 0 15px 40px rgba(106, 13, 173, 0.3); }
-        .screenshot-container img { width: 100%; display: block; }
-        .timeline { position: relative; padding-left: 30px; }
-        .timeline::before { content: ''; position: absolute; left: 5px; top: 0; bottom: 0; width: 2px; background: rgba(33, 150, 243, 0.3); }
-        .timeline-item { margin-bottom: 2rem; position: relative; }
-        .timeline-item::before { content: ''; position: absolute; left: -35px; top: 5px; width: 12px; height: 12px; border-radius: 50%; background: var(--secondary); border: 3px solid var(--dark); }
-        .timeline-item h4 { color: var(--secondary); }
-        footer { background: rgba(18, 24, 40, 0.8); padding: 3rem 0; text-align: center; margin-top: 3rem; }
-        .contact-links { display: flex; justify-content: center; gap: 1.5rem; margin: 1rem 0; }
-        .contact-link { width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--secondary)); display: flex; align-items: center; justify-content: center; color: var(--light); font-size: 1.2rem; transition: var(--transition); text-decoration: none; }
-        .contact-link:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(33, 150, 243, 0.4); }
-        .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
-        .fade-in.visible { opacity: 1; transform: translateY(0); }
-        @media (max-width: 768px) {
-            .nav-links { display: none; }
-            .hero h1 { font-size: 2.5rem; }
+
+        .btn { 
+            display: inline-flex;
+            align-items: center;
+            padding: 15px 35px; 
+            background: var(--gradient); 
+            color: white; 
+            border: none; 
+            border-radius: 50px; 
+            font-weight: 600; 
+            font-size: 1.1rem; 
+            cursor: pointer; 
+            transition: var(--transition); 
+            text-decoration: none; 
+            box-shadow: var(--shadow);
+            gap: 10px;
+            transform: translateZ(20px);
+            position: relative;
+            overflow: hidden;
         }
+        
+        .btn:hover { 
+            transform: translateY(-5px) translateZ(30px); 
+            box-shadow: var(--shadow-hover); 
+            background: var(--gradient-hover);
+        }
+        
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: rotate(30deg);
+            transition: transform 0.6s ease;
+            pointer-events: none;
+        }
+        
+        .btn:hover::after {
+            transform: translateY(100%) rotate(30deg);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--secondary);
+            margin-left: 15px;
+        }
+        
+        .btn-outline:hover {
+            background: rgba(33, 150, 243, 0.1);
+        }
+        
+     
+        /* Section Titles */
+        .section-title { 
+            text-align: center; 
+            margin-bottom: 4rem; 
+            position: relative;
+            transform: translateZ(20px);
+        }
+        
+        .section-title h2 { 
+            font-size: 2.8rem; 
+            display: inline-block; 
+            position: relative; 
+            padding-bottom: 15px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary)); 
+            -webkit-background-clip: text; 
+            background-clip: text; 
+            color: transparent;
+            font-weight: 800;
+            transform: translateZ(30px);
+        }
+        
+        .section-title h2::after { 
+            content: ''; 
+            position: absolute; 
+            bottom: 0; 
+            left: 50%; 
+            transform: translateX(-50%) translateZ(20px); 
+            width: 100px; 
+            height: 5px; 
+            background: var(--gradient); 
+            border-radius: 3px; 
+        }
+        
+        .section-title p { 
+            color: #94a3b8; 
+            max-width: 700px; 
+            margin: 1.5rem auto 0; 
+            font-size: 1.15rem;
+            transform: translateZ(20px);
+        }
+        
+        /* Cards */
+        .card { 
+            background: var(--card-bg); 
+            border-radius: 15px; 
+            padding: 2.5rem; 
+            box-shadow: var(--shadow); 
+            transition: var(--transition-3d); 
+            backdrop-filter: blur(10px); 
+            border: 1px solid var(--card-border); 
+            height: 100%;
+            transform-style: preserve-3d;
+            transform: translateZ(0);
+        }
+        
+        .card:hover { 
+            transform: translateY(-10px) translateZ(20px); 
+            box-shadow: var(--shadow-hover); 
+            border-color: rgba(33, 150, 243, 0.2);
+        }
+        
+        .card-title { 
+            display: flex; 
+            align-items: center; 
+            gap: 15px; 
+            margin-bottom: 1.5rem; 
+            color: var(--secondary); 
+            font-size: 1.5rem;
+            font-weight: 700;
+            transform: translateZ(20px);
+        }
+        
+        .card-title i { 
+            background: rgba(33, 150, 243, 0.1); 
+            width: 50px; 
+            height: 50px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            border-radius: 12px; 
+            font-size: 1.3rem;
+            transform: translateZ(20px);
+        }
+        
+        /* Grid Layout */
+        .grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+            gap: 2.5rem; 
+        }
+        
+        /* Video Container */
+        .video-container { 
+            position: relative; 
+            padding-bottom: 56.25%; 
+            height: 0; 
+            overflow: hidden; 
+            border-radius: 15px; 
+            box-shadow: var(--shadow); 
+            background: var(--dark);
+            border: 1px solid var(--card-border);
+            transform: translateZ(20px);
+            transition: var(--transition);
+        }
+        
+        .video-container:hover {
+            transform: translateZ(30px);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .video-container iframe { 
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            border: none; 
+        }
+        
+        /* Screenshots */
+        .screenshot-container { 
+            border-radius: 10px; 
+            overflow: hidden; 
+            box-shadow: var(--shadow); 
+            transition: var(--transition); 
+            border: 1px solid var(--card-border); 
+            position: relative;
+            transform-style: preserve-3d;
+            transform: translateZ(0);
+        }
+        
+        .screenshot-container:hover { 
+            transform: scale(1.03) translateZ(20px); 
+            box-shadow: var(--shadow-hover); 
+        }
+        
+        .screenshot-container img { 
+            width: 100%; 
+            display: block; 
+            transition: transform 0.5s ease;
+        }
+        
+        .screenshot-container:hover img {
+            transform: scale(1.05);
+        }
+        
+        .screenshot-label {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(18, 24, 40, 0.85);
+            padding: 12px;
+            font-size: 0.9rem;
+            text-align: center;
+            backdrop-filter: blur(5px);
+            transform: translateZ(10px);
+        }
+        
+        /* Timeline */
+        .timeline { 
+            position: relative; 
+            padding-left: 40px; 
+        }
+        
+        .timeline::before { 
+            content: ''; 
+            position: absolute; 
+            left: 15px; 
+            top: 0; 
+            bottom: 0; 
+            width: 3px; 
+            background: rgba(33, 150, 243, 0.3); 
+            border-radius: 3px;
+            transform: translateZ(10px);
+        }
+        
+        .timeline-item { 
+            margin-bottom: 2.5rem; 
+            position: relative; 
+            padding-left: 25px;
+            transform: translateZ(20px);
+            transition: var(--transition);
+        }
+        
+        .timeline-item:hover {
+            transform: translateX(10px) translateZ(30px);
+        }
+        
+        .timeline-item::before { 
+            content: ''; 
+            position: absolute; 
+            left: -40px; 
+            top: 8px; 
+            width: 15px; 
+            height: 15px; 
+            border-radius: 50%; 
+            background: var(--secondary); 
+            border: 3px solid var(--dark); 
+            z-index: 2;
+            transform: translateZ(20px);
+            box-shadow: 0 0 10px rgba(33, 150, 243, 0.5);
+        }
+        
+        .timeline-item h4 { 
+            color: var(--secondary); 
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+            transform: translateZ(20px);
+        }
+        
+        .timeline-item p { 
+            color: #cbd5e1; 
+            transform: translateZ(20px);
+        }
+        
+        .timeline-date {
+            display: inline-block;
+            background: rgba(33, 150, 243, 0.15);
+            color: var(--secondary);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-bottom: 10px;
+            font-weight: 500;
+            transform: translateZ(20px);
+        }
+        
+        /* Tools Section */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .tool-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: var(--transition-3d);
+            border: 1px solid var(--card-border);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transform-style: preserve-3d;
+            transform: translateZ(0);
+        }
+        
+        .tool-card:hover {
+            transform: translateY(-8px) translateZ(20px);
+            border-color: rgba(33, 150, 243, 0.3);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .tool-icon {
+            width: 70px;
+            height: 70px;
+            background: rgba(33, 150, 243, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+            color: var(--secondary);
+            transform: translateZ(30px);
+            transition: var(--transition);
+        }
+        
+        .tool-card:hover .tool-icon {
+            transform: translateZ(40px) rotateY(360deg);
+            background: rgba(33, 150, 243, 0.2);
+        }
+        
+        .tool-card h4 {
+            color: var(--light);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+            transform: translateZ(20px);
+        }
+        
+        .tool-card p {
+            color: #94a3b8;
+            font-size: 0.9rem;
+            transform: translateZ(20px);
+        }
+        
+        /* Features */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .feature-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.8rem;
+            display: flex;
+            gap: 1.2rem;
+            align-items: flex-start;
+            border: 1px solid var(--card-border);
+            transform-style: preserve-3d;
+            transform: translateZ(0);
+            transition: var(--transition-3d);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px) translateZ(20px);
+            box-shadow: var(--shadow-hover);
+            border-color: rgba(33, 150, 243, 0.3);
+        }
+        
+        .feature-icon {
+            background: rgba(33, 150, 243, 0.1);
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            color: var(--secondary);
+            flex-shrink: 0;
+            transform: translateZ(30px);
+            transition: var(--transition);
+        }
+        
+        .feature-card:hover .feature-icon {
+            transform: translateZ(40px) scale(1.1);
+            background: rgba(33, 150, 243, 0.2);
+        }
+        
+        .feature-content h4 {
+            color: var(--light);
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+            transform: translateZ(20px);
+        }
+        
+        .feature-content p {
+            color: #94a3b8;
+            transform: translateZ(20px);
+        }
+        
+        /* Error Handling */
+        .error-card {
+            background: rgba(255, 107, 107, 0.05);
+            border: 1px solid rgba(255, 107, 107, 0.2);
+        }
+        
+        .error-card .card-title {
+            color: var(--accent);
+        }
+        
+        .error-card .card-title i {
+            background: rgba(255, 107, 107, 0.1);
+            color: var(--accent);
+        }
+        
+        /* Future Section */
+        .future-card {
+            background: rgba(76, 175, 80, 0.05);
+            border: 1px solid rgba(76, 175, 80, 0.2);
+        }
+        
+        .future-card .card-title {
+            color: var(--success);
+        }
+        
+        .future-card .card-title i {
+            background: rgba(76, 175, 80, 0.1);
+            color: var(--success);
+        }
+        
+        /* Footer */
+        footer { 
+            background: rgba(18, 24, 40, 0.8); 
+            padding: 4rem 0 2rem; 
+            margin-top: 3rem; 
+            position: relative;
+            transform: translateZ(20px);
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .footer-col h3 {
+            color: var(--light);
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 10px;
+            transform: translateZ(20px);
+        }
+        
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--gradient);
+            border-radius: 3px;
+            transform: translateZ(20px);
+        }
+        
+        .footer-col p {
+            color: #94a3b8;
+            margin-bottom: 1.5rem;
+            transform: translateZ(20px);
+        }
+        
+        .contact-links { 
+            display: flex; 
+            gap: 1.2rem; 
+            margin: 1rem 0 1.5rem;
+        }
+        
+        .contact-link { 
+            width: 45px; 
+            height: 45px; 
+            border-radius: 50%; 
+            background: var(--gradient); 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            color: var(--light); 
+            font-size: 1.1rem; 
+            transition: var(--transition-3d); 
+            text-decoration: none; 
+            transform: translateZ(20px);
+        }
+        
+        .contact-link:hover { 
+            transform: translateY(-5px) translateZ(30px); 
+            box-shadow: 0 5px 15px rgba(33, 150, 243, 0.4); 
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+            transform: translateZ(20px);
+        }
+        
+        .footer-links a {
+            color: #94a3b8;
+            text-decoration: none;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            transform: translateZ(20px);
+        }
+        
+        .footer-links a:hover {
+            color: var(--secondary);
+            transform: translateX(5px) translateZ(30px);
+        }
+        
+        .footer-links a i {
+            width: 25px;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            color: #94a3b8;
+            font-size: 0.9rem;
+            transform: translateZ(20px);
+        }
+        
+        /* Back to top button */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--gradient);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            opacity: 0;
+            visibility: hidden;
+            z-index: 999;
+            box-shadow: var(--shadow);
+            transform: translateZ(30px);
+        }
+        
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            transform: translateY(-5px) translateZ(40px);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        /* Animations */
+        .fade-in { 
+            opacity: 0; 
+            transform: translateY(20px) translateZ(0); 
+            transition: opacity 0.6s ease-out, transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+        }
+        
+        .fade-in.visible { 
+            opacity: 1; 
+            transform: translateY(0) translateZ(0); 
+        }
+        
+        /* Parallax effect */
+        .parallax {
+            position: relative;
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            overflow: hidden;
+        }
+        
+        .parallax::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(106, 13, 173, 0.1), rgba(33, 150, 243, 0.1));
+            z-index: -1;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .hero h1 {
+                font-size: 3.2rem;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .hero {
+                text-align: center;
+                padding: 7rem 0 3rem;
+            }
+            
+            .hero-content {
+                margin: 0 auto;
+            }
+            
+ 
+            
+            .btn-outline {
+                margin-left: 0;
+                margin-top: 15px;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 280px;
+                height: 100vh;
+                background: rgba(18, 24, 40, 0.95);
+                backdrop-filter: blur(10px);
+                flex-direction: column;
+                padding: 80px 20px 20px;
+                transition: right 0.5s ease;
+                z-index: 1000;
+                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
+            }
+            
+            .nav-links.active {
+                right: 0;
+            }
+            
+            .nav-links a {
+                padding: 12px 0;
+                font-size: 1.1rem;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 { 
+                font-size: 2.5rem; 
+            }
+            
+            .section-title h2 {
+                font-size: 2.3rem;
+            }
+            
+            .section-padding {
+                padding: 4rem 0;
+            }
+            
+            .card {
+                padding: 1.8rem;
+            }
+            
+            .hero-badge {
+                font-size: 0.8rem;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero h1 { 
+                font-size: 2.2rem; 
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .btn {
+                padding: 12px 25px;
+                font-size: 1rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .card-title {
+                font-size: 1.3rem;
+            }
+            
+            .card-title i {
+                width: 40px;
+                height: 40px;
+                font-size: 1.1rem;
+            }
+        }
+        
+        @media (max-width: 400px) {
+            .hero h1 { 
+                font-size: 1.9rem; 
+            }
+            
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+            
+            .container {
+                padding: 0 15px;
+            }
+            
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 300px) {
+            .hero h1 { 
+                font-size: 1.7rem; 
+            }
+            
+            .section-title h2 {
+                font-size: 1.6rem;
+            }
+            
+            .btn {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+            
+            .btn-outline {
+                margin-top: 0;
+            }
+        }
+        .preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--darker);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.preloader-spinner {
+    width: 80px;
+    height: 80px;
+    position: relative;
+}
+
+.spinner-circle {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 5px solid transparent;
+    border-top-color: var(--secondary);
+    border-bottom-color: var(--primary);
+    animation: spin 1.5s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
     </style>
 </head>
 <body>
+    <!-- Particle Background -->
+    <div id="particles-js"></div>
+    
+    <!-- Preloader -->
+    <div class="preloader">
+    <div class="preloader-spinner">
+        <div class="spinner-circle"></div>
+    </div>
+</div>
+    
     <header id="header">
         <div class="container">
             <nav class="navbar">
-                <a href="#" class="logo">Albert<span>.dev</span></a>
+                <a href="#" class="logo">
+                    <i class="fas fa-robot"></i>
+                    Albert_Abishek<span>.dev</span>
+                </a>
                 <div class="nav-links">
-                    <a href="#overview">Overview</a>
-                    <a href="#demo">Live Demo</a>
+                    <a href="#overview" class="active">Overview</a>
+                    <a href="#demo">Demo</a>
                     <a href="#deliverables">Deliverables</a>
-                    <a href="#journey">My Journey</a>
+                    <a href="#journey">Journey</a>
+                    <a href="#tools">Tools</a>
+                    <a href="#error">Error Handling</a>
+                </div>
+                <div class="menu-toggle">
+                    <i class="fas fa-bars"></i>
                 </div>
             </nav>
         </div>
@@ -118,123 +1031,407 @@
         <section class="hero">
             <div class="container">
                 <div class="hero-content fade-in">
-                    <h1>AI Agent Development Internship Submission</h1>
-                    <p>A robust n8n automation to streamline content publishing from Google Docs to Ghost, complete with AI-powered SEO, featured image handling, and comprehensive error logging.</p>
-                    <a href="#demo" class="btn"><i class="fas fa-play-circle"></i> Watch the Demo</a>
-                </div>
-            </div>
-        </section>
-
-        <section id="overview">
-            <div class="container">
-                <div class="section-title fade-in">
-                    <h2>Project Overview</h2>
-                    <p>The mission was to build a fully automated content pipeline. This solution demonstrates a production-ready workflow that is efficient, reliable, and intelligent.</p>
-                </div>
-                <div class="card fade-in">
-                    <h3 class="card-title"><i class="fas fa-cogs"></i> How It Works</h3>
-                    <p>The automation triggers when a writer moves a Google Doc into a "Ready to Publish" folder. The n8n workflow then takes over, performing a series of actions: it parses the document to extract the title, body content, tags, and a featured image URL. It then uses the OpenAI API to generate a concise, SEO-friendly meta description. Finally, it publishes the complete article to a Ghost blog, setting the title, content, tags, meta description, and featured image—all without human intervention. For full reliability, the entire process is wrapped in error handling, with success and failure notifications sent to Slack and a permanent log kept in Google Sheets.</p>
-                </div>
-            </div>
-        </section>
-
-        <section id="demo">
-            <div class="container">
-                <div class="section-title fade-in">
-                    <h2>Live Demo & Walkthrough</h2>
-                    <p>This video provides a complete demonstration of the workflow in action, from start to finish, and explains the technical decisions made during development.</p>
-                </div>
-                <div class="card fade-in">
-                    <div class="video-container">
-                        <iframe src="https://www.youtube.com/embed///" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <div class="hero-badge">
+                        <i class="fas fa-star"></i> Rahul Enterprises Internship Submission
+                    </div>
+                    <h1>AI-Powered Content Automation Workflow</h1>
+                    <p>A robust n8n solution that transforms Google Docs drafts into published Ghost articles with AI-generated SEO metadata, notifications, and comprehensive logging - demonstrating problem-solving and technical mastery.</p>
+                    <div>
+                        <a href="#demo" class="btn">
+                            <i class="fas fa-play-circle"></i> Watch Demo
+                        </a>
+                        <a href="#deliverables" class="btn btn-outline">
+                            <i class="fas fa-download"></i> Download Workflow
+                        </a>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="deliverables">
+        <section id="overview" class="section-padding">
+            <div class="container">
+                <div class="section-title fade-in">
+                    <h2>Project Overview</h2>
+                    <p>A sophisticated automation workflow that transforms AI-generated content into professionally published blog posts with minimal human intervention.</p>
+                </div>
+                
+                <div class="features-grid">
+                    <div class="feature-card fade-in">
+                        <div class="feature-icon">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <div class="feature-content">
+                            <h4>Trigger Mechanism</h4>
+                            <p>Automation initiates when a Google Doc is moved to the "Ready to Publish" folder, requiring no additional user actions.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card fade-in">
+                        <div class="feature-icon">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <div class="feature-content">
+                            <h4>Content Extraction</h4>
+                            <p>Intelligent parsing extracts title, content body, tags, and featured image URL from structured Google Docs.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card fade-in">
+                        <div class="feature-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <div class="feature-content">
+                            <h4>AI Processing</h4>
+                            <p>OpenAI integration generates concise, SEO-optimized meta descriptions from document content.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card fade-in">
+                        <div class="feature-icon">
+                            <i class="fas fa-upload"></i>
+                        </div>
+                        <div class="feature-content">
+                            <h4>Ghost Publishing</h4>
+                            <p>Posts are published to Ghost CMS with all metadata, tags, and featured images via a secure API connection.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card fade-in">
+                        <div class="feature-icon">
+                            <i class="fas fa-bell"></i>
+                        </div>
+                        <div class="feature-content">
+                            <h4>Notifications</h4>
+                            <p>Real-time Slack notifications with post links for successful publications and error alerts for failures.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-card fade-in">
+                        <div class="feature-icon">
+                            <i class="fas fa-clipboard-list"></i>
+                        </div>
+                        <div class="feature-content">
+                            <h4>Logging & Tracking</h4>
+                            <p>Comprehensive logging in Google Sheets with timestamps, post details, and status indicators.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="demo" class="section-padding parallax" style="background: rgba(18, 24, 40, 0.5);">
+            <div class="container">
+                <div class="section-title fade-in">
+                    <h2>Workflow Demo</h2>
+                    <p>Watch the complete workflow in action - from document trigger to published article and notifications.</p>
+                </div>
+                
+                <div class="card fade-in">
+                    <div class="video-container">
+                        <!-- Replace with your actual Loom video embed code -->
+                        <iframe src="https://www.loom.com/embed/123456789" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                    
+                    <div class="timeline" style="margin-top: 2.5rem;">
+                        <div class="timeline-item fade-in">
+                            <div class="timeline-date">0:00 - 0:20</div>
+                            <h4>Introduction & Workflow Overview</h4>
+                            <p>Presentation of the complete n8n workflow and project goals.</p>
+                        </div>
+                        
+                        <div class="timeline-item fade-in">
+                            <div class="timeline-date">0:20 - 0:50</div>
+                            <h4>Google Docs Structure</h4>
+                            <p>Highlighting the required document format with title, content, tags, and image URL.</p>
+                        </div>
+                        
+                        <div class="timeline-item fade-in">
+                            <div class="timeline-date">0:50 - 1:20</div>
+                            <h4>Triggering the Workflow</h4>
+                            <p>Moving the document to "Ready to Publish" folder to initiate automation.</p>
+                        </div>
+                        
+                        <div class="timeline-item fade-in">
+                            <div class="timeline-date">1:20 - 2:00</div>
+                            <h4>Content Processing</h4>
+                            <p>Document parsing, OpenAI meta description generation, and payload preparation.</p>
+                        </div>
+                        
+                        <div class="timeline-item fade-in">
+                            <div class="timeline-date">2:00 - 2:40</div>
+                            <h4>Ghost Publishing</h4>
+                            <p>API authentication, post creation, and featured image setting.</p>
+                        </div>
+                        
+                        <div class="timeline-item fade-in">
+                            <div class="timeline-date">2:40 - 3:10</div>
+                            <h4>Notifications & Logging</h4>
+                            <p>Slack notifications and Google Sheets logging demonstration.</p>
+                        </div>
+                        
+                        <div class="timeline-item fade-in">
+                            <div class="timeline-date">3:10 - 3:50</div>
+                            <h4>Error Handling</h4>
+                            <p>Showcasing the robust error handling mechanisms for API failures.</p>
+                        </div>
+                        
+                        <div class="timeline-item fade-in">
+                            <div class="timeline-date">3:50 - 4:30</div>
+                            <h4>Technical Journey</h4>
+                            <p>Discussion of challenges and the strategic pivot from WordPress to Ghost.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="deliverables" class="section-padding">
             <div class="container">
                 <div class="section-title fade-in">
                     <h2>Submission Deliverables</h2>
-                    <p>Here are all the required components for the assignment, including the workflow file and proof of execution.</p>
+                    <p>Complete package demonstrating the workflow implementation and execution.</p>
                 </div>
                 
                 <div class="grid">
                     <div class="card fade-in">
-                        <h3 class="card-title"><i class="fas fa-table"></i> n8n Workflow image</h3>
-                        <p>A screenshot of the n8n Workflow</p>
-                         <div class="screenshot-container" style="margin-top: 1rem;">
-                            <a href="images/Workflow.png" target="_blank"><img src="images/Workflow.png" alt="Google Sheets Log Screenshot"></a>
+                        <h3 class="card-title"><i class="fas fa-project-diagram"></i> n8n Workflow</h3>
+                        <p>The complete automation workflow exported from n8n. This JSON file can be imported into any n8n instance to replicate the solution.</p>
+                        <a href="Internship Task Workflow.json" download class="btn" style="margin-top: 1.5rem;">
+                            <i class="fas fa-download"></i> Download Workflow JSON
+                        </a>
+                    </div>
+                    
+                    
+                    <div class="card fade-in">
+                        <h3 class="card-title"><i class="fas fa-images"></i> Screenshots</h3>
+                        <p>Visual proof of workflow execution at each critical stage.</p>
+                        <div style="margin-top: 1.5rem;">
+                            <a href="#screenshots" class="btn">
+                                <i class="fas fa-eye"></i> View Gallery
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="screenshots" class="grid" style="margin-top: 2.5rem;">
+                    <div class="fade-in">
+                        <div class="screenshot-container">
+                            <a href="images/Ghost site.png" target="_blank">
+                            <img src="images/Ghost site.png" alt="Ghost Published Post">
+                            <div class="screenshot-label">Published Ghost Post</div></a>
+                        </div>
+                    </div>
+                    
+                    <div class="fade-in">
+                        <div class="screenshot-container">
+                            <a href="images/Workflow.png" target="_blank">
+                            <img src="images/Workflow.png" alt="n8n Workflow">
+                            <div class="screenshot-label">n8n Workflow Canvas</div></a>
+                        </div>
+                    </div>
+                    
+                    <div class="fade-in">
+                        <div class="screenshot-container">
+                            <a href="images/slack-notifications.png" target="_blank">
+                            <img src="images/slack-notifications.png" alt="Slack Notifications">
+                            <div class="screenshot-label">Slack Notifications</div></a>
+                        </div>
+                    </div>
+                    
+                    <div class="fade-in">
+                        <div class="screenshot-container">
+                            <a href="images/Google sheet.png" target="_blank"> 
+                            <img src="images/Google sheet.png" alt="Google Sheets Log">
+                            <div class="screenshot-label">Google Sheets Log</div></a>
+                        </div>
+                    </div>
+                    <div class="fade-in">
+                        <div class="screenshot-container">
+                            <a href="images/Google Docs.png" target="_blank"> 
+                            <img src="images/Google Docs.png" alt="Google Sheets Log">
+                            <div class="screenshot-label">Google Docs Log</div></a>
+                        </div>
+                    </div><div class="fade-in">
+                        <div class="screenshot-container">
+                            <a href="images/Google Drive.png" target="_blank"> 
+                            <img src="images/Google Drive.png" alt="Google Sheets Log">
+                            <div class="screenshot-label">Google Drive Log</div></a>
                         </div>
                     </div>
 
-                    <div class="card fade-in">
-                        <h3 class="card-title"><i class="fas fa-file-code"></i> n8n Workflow File</h3>
-                        <p>The complete, exported n8n workflow. You can import this directly into your own n8n instance to see the full implementation.</p>
-                        <a href="Internship Task Workflow.json" download class="btn" style="margin-top: 1rem;"><i class="fas fa-download"></i> Download workflow.json</a>
-                    </div>
-                    <div class="card fade-in">
-                        <h3 class="card-title"><i class="fas fa-image"></i> Final Blog Post</h3>
-                        <p>A screenshot of the final article published on the Ghost blog, complete with the featured image and correct formatting.</p>
-                        <div class="screenshot-container" style="margin-top: 1rem;">
-                            <a href="images/Ghost site.png" target="_blank"><img src="images/Ghost site.png" alt="Ghost Post Screenshot"></a>
+                </div>
+            </div>
+        </section>
+
+        <section id="journey" class="section-padding parallax" style="background: rgba(18, 24, 40, 0.5);">
+            <div class="container">
+                <div class="section-title fade-in">
+                    <h2>Development Journey</h2>
+                    <p>The path from initial concept to robust solution, showcasing adaptability and problem-solving skills.</p>
+                </div>
+                
+                <div class="card fade-in">
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-date">Phase 1</div>
+                            <h4>Initial Approach: WordPress.com</h4>
+                            <p>I began with WordPress.com as suggested, successfully implementing the API workflow. However, I quickly identified critical limitations in the free tier's media handling capabilities that made featured image uploads unreliable for production use.</p>
                         </div>
-                    </div>
-                    <div class="card fade-in">
-                        <h3 class="card-title"><i class="fab fa-slack"></i> Success & Error Proof</h3>
-                        <p>Screenshots demonstrating both the success notification and the robust error handling notification in Slack.</p>
-                         <div class="screenshot-container" style="margin-top: 1rem;">
-                            <a href="images/slack-notifications.png" target="_blank"><img src="images/slack-notifications.png" alt="Slack Notifications Screenshot"></a>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-date">Phase 2</div>
+                            <h4>Strategic Pivot: WordPress.org</h4>
+                            <p>To overcome platform constraints, I migrated to a self-hosted WordPress.org solution. While this resolved API access issues, it revealed incompatibilities between n8n's HTTP node implementation and WordPress's multipart file upload requirements, causing persistent technical roadblocks.</p>
                         </div>
-                    </div>
-                     <div class="card fade-in">
-                        <h3 class="card-title"><i class="fas fa-table"></i> Google Sheets Log</h3>
-                        <p>A screenshot of the Google Sheet, showing the successful logging of the published article's details.</p>
-                         <div class="screenshot-container" style="margin-top: 1rem;">
-                            <a href="images/Google sheet.png" target="_blank"><img src="images/Google sheet.png" alt="Google Sheets Log Screenshot"></a>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-date">Phase 3</div>
+                            <h4>Final Solution: Ghost CMS</h4>
+                            <p>After thorough evaluation, I pivoted to Ghost. Its modern, well-documented API with native image URL support allowed me to implement a robust solution. I implemented JWT authentication and utilized Ghost's sideloading feature for images, resulting in a reliable publishing workflow.</p>
                         </div>
-                    </div>
-                    <div class="card fade-in">
-                        <h3 class="card-title"><i class="fas fa-table"></i> Google Docs Log</h3>
-                        <p>A screenshot of the Google Docs, showing the post details.</p>
-                         <div class="screenshot-container" style="margin-top: 1rem;">
-                            <a href="images/Google Docs.png" target="_blank"><img src="images/Google Docs.png" alt="Google Sheets Log Screenshot"></a>
-                        </div>
-                    </div>
-                    <div class="card fade-in">
-                        <h3 class="card-title"><i class="fas fa-table"></i> Google Drive Folders</h3>
-                        <p>A screenshot of the Google Drive, showing the Draft and Ready to Publish folders.</p>
-                         <div class="screenshot-container" style="margin-top: 1rem;">
-                            <a href="images/Google Drive.png" target="_blank"><img src="images/Google Drive.png" alt="Google Sheets Log Screenshot"></a>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-date">Key Takeaway</div>
+                            <h4>Technical Resilience & Adaptability</h4>
+                            <p>This journey demonstrates my ability to diagnose platform-level constraints, research alternative solutions, and make strategic pivots to deliver production-ready systems. It highlights my perseverance and commitment to finding the right technical approach.</p>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="journey">
+        <section id="tools" class="section-padding">
             <div class="container">
                 <div class="section-title fade-in">
-                    <h2>The Development Journey</h2>
-                    <p>A successful project is not just about the final result, but the process of overcoming challenges. This section details the strategic decisions and problem-solving that led to the final, robust workflow.</p>
+                    <h2>Tools & Technologies</h2>
+                    <p>Comprehensive technology stack used to implement the automation solution.</p>
                 </div>
-                <div class="card fade-in">
-                    <div class="timeline">
-                        <div class="timeline-item">
-                            <h4>Initial Platform: WordPress.com</h4>
-                            <p>I began by building the automation for WordPress.com. While I successfully interacted with its API, I quickly discovered critical limitations in the free tier's media handling capabilities, which made direct file uploads unreliable.</p>
+                
+                <div class="tools-grid">
+                    <div class="tool-card fade-in">
+                        <div class="tool-icon">
+                            <i class="fab fa-google-drive"></i>
                         </div>
-                        <div class="timeline-item">
-                            <h4>Pivot 1: WordPress.org</h4>
-                            <p>Recognizing the platform constraints, I made a strategic pivot to a self-hosted WordPress.org environment. This provided full API access but revealed a deep-seated incompatibility between the n8n version's HTTP node and the specific requirements for multipart file uploads, leading to persistent errors.</p>
+                        <h4>Google Workspace</h4>
+                        <p>Docs for content creation, Drive for triggering, Sheets for logging</p>
+                    </div>
+                    
+                    <div class="tool-card fade-in">
+                        <div class="tool-icon">
+                            <i class="fas fa-ghost"></i>
                         </div>
-                        <div class="timeline-item">
-                            <h4>Pivot 2 & Final Solution: Ghost</h4>
-                            <p>To deliver a flawless and professional solution, I made a final pivot to Ghost. Its modern, well-documented Admin API and first-class n8n integration allowed me to build the final workflow efficiently. This version seamlessly publishes the content, sideloads the featured image from its URL, and sets all metadata in a single, reliable step.</p>
+                        <h4>Ghost CMS</h4>
+                        <p>Modern publishing platform with robust API</p>
+                    </div>
+                    
+                    <div class="tool-card fade-in">
+                        <div class="tool-icon">
+                            <i class="fas fa-code"></i>
                         </div>
-                         <div class="timeline-item">
-                            <h4>Key Takeaway</h4>
-                            <p>This journey highlights my ability to diagnose platform-level issues, adapt to unforeseen technical challenges, and strategically choose the right tools to ensure a project's success. It demonstrates resilience and a commitment to delivering a high-quality, working product.</p>
+                        <h4>n8n</h4>
+                        <p>Workflow automation platform for connecting services</p>
+                    </div>
+                    
+                    <div class="tool-card fade-in">
+                        <div class="tool-icon">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <h4>OpenAI API</h4>
+                        <p>AI-generated SEO meta descriptions</p>
+                    </div>
+                    
+                    <div class="tool-card fade-in">
+                        <div class="tool-icon">
+                            <i class="fab fa-slack"></i>
+                        </div>
+                        <h4>Slack</h4>
+                        <p>Real-time success and error notifications</p>
+                    </div>
+                    
+                    <div class="tool-card fade-in">
+                        <div class="tool-icon">
+                            <i class="fas fa-server"></i>
+                        </div>
+                        <h4>REST APIs</h4>
+                        <p>Ghost Admin API, Google APIs, Slack API</p>
+                    </div>
+                    
+                    <div class="tool-card fade-in">
+                        <div class="tool-icon">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        <h4>JWT Auth</h4>
+                        <p>Secure authentication for Ghost API</p>
+                    </div>
+                    
+                    <div class="tool-card fade-in">
+                        <div class="tool-icon">
+                            <i class="fas fa-bug"></i>
+                        </div>
+                        <h4>Error Handling</h4>
+                        <p>Comprehensive error management system</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="error" class="section-padding">
+            <div class="container">
+                <div class="grid">
+                    <div class="fade-in">
+                        <div class="card error-card">
+                            <h3 class="card-title"><i class="fas fa-exclamation-triangle"></i> Error Handling</h3>
+                            <p>Robust error management is critical for production-ready automation. My solution includes comprehensive error handling at every stage:</p>
+                            
+                            <div style="margin-top: 1.5rem;">
+                                <h4 style="color: var(--accent); margin-bottom: 0.8rem;">Implementation Approach:</h4>
+                                <ul style="padding-left: 1.5rem; color: #cbd5e1;">
+                                    <li style="margin-bottom: 0.8rem;">Conditional error checking after each API operation</li>
+                                    <li style="margin-bottom: 0.8rem;">Automatic retry mechanisms for transient errors</li>
+                                    <li style="margin-bottom: 0.8rem;">Detailed error logging with contextual information</li>
+                                    <li style="margin-bottom: 0.8rem;">Dedicated Slack error channel notifications</li>
+                                    <li>Fallback procedures to prevent workflow crashes</li>
+                                </ul>
+                            </div>
+                            
+                            <div style="margin-top: 1.5rem; background: rgba(255, 107, 107, 0.08); padding: 1.2rem; border-radius: 10px;">
+                                <h4 style="color: var(--accent); margin-bottom: 0.8rem;">Error Scenarios Handled:</h4>
+                                <ul style="padding-left: 1.5rem; color: #cbd5e1;">
+                                    <li style="margin-bottom: 0.8rem;">Ghost API authentication failures</li>
+                                    <li style="margin-bottom: 0.8rem;">Invalid or missing document structure</li>
+                                    <li style="margin-bottom: 0.8rem;">OpenAI API rate limiting</li>
+                                    <li style="margin-bottom: 0.8rem;">Network connectivity issues</li>
+                                    <li>Invalid image URLs or file formats</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="fade-in">
+                        <div class="card future-card">
+                            <h3 class="card-title"><i class="fas fa-rocket"></i> Future Extensions</h3>
+                            <p>This workflow provides a foundation that can be extended with additional capabilities:</p>
+                            
+                            <div style="margin-top: 1.5rem;">
+                                <h4 style="color: var(--success); margin-bottom: 0.8rem;">Planned Enhancements:</h4>
+                                <ul style="padding-left: 1.5rem; color: #cbd5e1;">
+                                    <li style="margin-bottom: 0.8rem;"><strong>Multi-platform Publishing:</strong> Simultaneous posting to WordPress, Medium, and Dev.to</li>
+                                    <li style="margin-bottom: 0.8rem;"><strong>AI Content Enhancement:</strong> Automated proofreading and optimization suggestions</li>
+                                    <li style="margin-bottom: 0.8rem;"><strong>Social Media Automation:</strong> Auto-sharing to Twitter, LinkedIn, and Facebook</li>
+                                    <li style="margin-bottom: 0.8rem;"><strong>Translation Workflow:</strong> AI-powered multilingual content generation</li>
+                                    <li><strong>Performance Analytics:</strong> Track engagement metrics and content performance</li>
+                                </ul>
+                            </div>
+                            
+                            <div style="margin-top: 1.5rem; background: rgba(76, 175, 80, 0.08); padding: 1.2rem; border-radius: 10px;">
+                                <h4 style="color: var(--success); margin-bottom: 0.8rem;">Advanced Features:</h4>
+                                <ul style="padding-left: 1.5rem; color: #cbd5e1;">
+                                    <li style="margin-bottom: 0.8rem;">Automated featured image generation with DALL-E</li>
+                                    <li style="margin-bottom: 0.8rem;">Content calendar synchronization</li>
+                                    <li style="margin-bottom: 0.8rem;">Automated content repurposing (videos, infographics)</li>
+                                    <li>Personalized content recommendations based on performance</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -244,18 +1441,66 @@
 
     <footer>
         <div class="container">
-            <h3>Albert Abishek</h3>
-            <p>AI & Automation Enthusiast</p>
-            <div class="contact-links">
-                <a href="mailto:include1iostream2@gmail.com" class="contact-link" aria-label="Email"><i class="fas fa-envelope"></i></a>
-                <a href="https://www.linkedin.com/" target="_blank" class="contact-link" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                <a href="https://github.com/" target="_blank" class="contact-link" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>Albert Abishek I</h3>
+                    <p>Full-Stack Developer & AI Integration Specialist passionate about creating intelligent automation solutions.</p>
+                    <div class="contact-links">
+                        <a href="mailto:albertabishek369@gmail.com" class="contact-link" aria-label="Email">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                        <a href="tel:+919042824369" class="contact-link" aria-label="Phone">
+                            <i class="fas fa-phone"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Project Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#overview"><i class="fas fa-chevron-right"></i> Project Overview</a></li>
+                        <li><a href="#demo"><i class="fas fa-chevron-right"></i> Workflow Demo</a></li>
+                        <li><a href="#deliverables"><i class="fas fa-chevron-right"></i> Deliverables</a></li>
+                        <li><a href="#journey"><i class="fas fa-chevron-right"></i> Development Journey</a></li>
+                        <li><a href="#tools"><i class="fas fa-chevron-right"></i> Tools & Technologies</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Declaration</h3>
+                    <p>I hereby declare that all the information provided in this submission is true and accurate to the best of my knowledge and belief.</p>
+                    <p style="margin-top: 1rem; font-style: italic;">
+                        Place: Vellore, Tamil Nadu<br>
+                        Date: July 11, 2025
+                    </p>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                &copy; 2025 Albert Abishek .I | AI Agent Development Internship Submission
             </div>
         </div>
     </footer>
+    
+    <!-- Back to top button -->
+    <div class="back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Preloader
+            const preloader = document.querySelector('.preloader');
+            
+            // Remove preloader when page is loaded
+window.addEventListener('load', function() {
+    setTimeout(function() {
+        preloader.style.opacity = '0';
+        preloader.style.visibility = 'hidden';
+    }, 500);
+});
+            
+            // Fade-in animation for elements
             const faders = document.querySelectorAll('.fade-in');
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
@@ -264,21 +1509,265 @@
                     }
                 });
             }, { threshold: 0.1 });
+            
             faders.forEach(fader => {
                 observer.observe(fader);
             });
 
+            // Header scroll behavior
             let lastScrollTop = 0;
             const header = document.getElementById('header');
+            
             window.addEventListener('scroll', function() {
                 let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-                if (scrollTop > lastScrollTop) {
+                
+                if (scrollTop > lastScrollTop && scrollTop > 100) {
                     header.style.top = '-80px';
                 } else {
                     header.style.top = '0';
                 }
+                
                 lastScrollTop = scrollTop;
+                
+                // Update active navigation link
+                const sections = document.querySelectorAll('section');
+                let currentSection = '';
+                
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop - 100;
+                    if (scrollTop >= sectionTop) {
+                        currentSection = section.getAttribute('id');
+                    }
+                });
+                
+                document.querySelectorAll('.nav-links a').forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href').substring(1) === currentSection) {
+                        link.classList.add('active');
+                    }
+                });
+                
+                // Show/hide back to top button
+                const backToTop = document.querySelector('.back-to-top');
+                if (scrollTop > 500) {
+                    backToTop.classList.add('visible');
+                } else {
+                    backToTop.classList.remove('visible');
+                }
             });
+            
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        window.scrollTo({
+                            top: target.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // Back to top button
+            document.querySelector('.back-to-top').addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+            
+            // Mobile menu toggle
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navLinks = document.querySelector('.nav-links');
+            
+            menuToggle.addEventListener('click', function() {
+                navLinks.classList.toggle('active');
+                menuToggle.innerHTML = navLinks.classList.contains('active') ? 
+                    '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>';
+            });
+            
+            // Particle background
+            const particlesJSConfig = {
+                particles: {
+                    number: {
+                        value: 80,
+                        density: {
+                            enable: true,
+                            value_area: 800
+                        }
+                    },
+                    color: {
+                        value: "#2196F3"
+                    },
+                    shape: {
+                        type: "circle",
+                        stroke: {
+                            width: 0,
+                            color: "#000000"
+                        }
+                    },
+                    opacity: {
+                        value: 0.3,
+                        random: true,
+                        anim: {
+                            enable: true,
+                            speed: 1,
+                            opacity_min: 0.1,
+                            sync: false
+                        }
+                    },
+                    size: {
+                        value: 3,
+                        random: true,
+                        anim: {
+                            enable: true,
+                            speed: 2,
+                            size_min: 0.1,
+                            sync: false
+                        }
+                    },
+                    line_linked: {
+                        enable: true,
+                        distance: 150,
+                        color: "#6a0dad",
+                        opacity: 0.2,
+                        width: 1
+                    },
+                    move: {
+                        enable: true,
+                        speed: 1,
+                        direction: "none",
+                        random: true,
+                        straight: false,
+                        out_mode: "out",
+                        bounce: false,
+                        attract: {
+                            enable: true,
+                            rotateX: 600,
+                            rotateY: 1200
+                        }
+                    }
+                },
+                interactivity: {
+                    detect_on: "canvas",
+                    events: {
+                        onhover: {
+                            enable: true,
+                            mode: "grab"
+                        },
+                        onclick: {
+                            enable: true,
+                            mode: "push"
+                        },
+                        resize: true
+                    },
+                    modes: {
+                        grab: {
+                            distance: 140,
+                            line_linked: {
+                                opacity: 0.5
+                            }
+                        },
+                        push: {
+                            particles_nb: 4
+                        }
+                    }
+                },
+                retina_detect: true
+            };
+            
+            // Particles.js implementation
+            function initParticles() {
+                const canvas = document.createElement('canvas');
+                canvas.id = 'particles-js-canvas';
+                canvas.style.position = 'fixed';
+                canvas.style.top = '0';
+                canvas.style.left = '0';
+                canvas.style.width = '100%';
+                canvas.style.height = '100%';
+                canvas.style.zIndex = '-1';
+                document.getElementById('particles-js').appendChild(canvas);
+                
+                const ctx = canvas.getContext('2d');
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                
+                const particles = [];
+                const particleCount = particlesJSConfig.particles.number.value;
+                const linkDistance = particlesJSConfig.particles.line_linked.distance;
+                const linkColor = particlesJSConfig.particles.line_linked.color;
+                const linkOpacity = particlesJSConfig.particles.line_linked.opacity;
+                const linkWidth = particlesJSConfig.particles.line_linked.width;
+                
+                // Create particles
+                for (let i = 0; i < particleCount; i++) {
+                    particles.push({
+                        x: Math.random() * canvas.width,
+                        y: Math.random() * canvas.height,
+                        vx: (Math.random() - 0.5) * 0.5,
+                        vy: (Math.random() - 0.5) * 0.5,
+                        radius: Math.random() * 3 + 1,
+                        color: particlesJSConfig.particles.color.value
+                    });
+                }
+                
+                // Animation loop
+                function animate() {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    
+                    // Update and draw particles
+                    for (let i = 0; i < particles.length; i++) {
+                        const p = particles[i];
+                        
+                        // Update position
+                        p.x += p.vx;
+                        p.y += p.vy;
+                        
+                        // Boundary collision
+                        if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                        if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+                        
+                        // Draw particle
+                        ctx.beginPath();
+                        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                        ctx.fillStyle = p.color;
+                        ctx.globalAlpha = particlesJSConfig.particles.opacity.value;
+                        ctx.fill();
+                        
+                        // Draw connections
+                        for (let j = i + 1; j < particles.length; j++) {
+                            const p2 = particles[j];
+                            const dx = p.x - p2.x;
+                            const dy = p.y - p2.y;
+                            const distance = Math.sqrt(dx * dx + dy * dy);
+                            
+                            if (distance < linkDistance) {
+                                ctx.beginPath();
+                                ctx.moveTo(p.x, p.y);
+                                ctx.lineTo(p2.x, p2.y);
+                                ctx.strokeStyle = linkColor;
+                                ctx.globalAlpha = linkOpacity * (1 - distance / linkDistance);
+                                ctx.lineWidth = linkWidth;
+                                ctx.stroke();
+                            }
+                        }
+                    }
+                    
+                    requestAnimationFrame(animate);
+                }
+                
+                animate();
+                
+                // Resize handler
+                window.addEventListener('resize', function() {
+                    canvas.width = window.innerWidth;
+                    canvas.height = window.innerHeight;
+                });
+            }
+            
+            initParticles();
         });
     </script>
 </body>
